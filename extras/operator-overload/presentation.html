@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!-- configuration parameters -->
+  <meta name="defaultView" content="slideshow" />
+  <meta name="controlVis" content="hidden" />
+  <!-- style sheet links -->
+  <link rel="stylesheet" href="s5/default/slides.css" type="text/css" media="projection" id="slideProj" />
+  <link rel="stylesheet" href="s5/default/outline.css" type="text/css" media="screen" id="outlineStyle" />
+  <link rel="stylesheet" href="s5/default/print.css" type="text/css" media="print" id="slidePrint" />
+  <link rel="stylesheet" href="s5/default/opera.css" type="text/css" media="projection" id="operaFix" />
+  <!-- S5 JS -->
+  <script src="s5/default/slides.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="layout">
+<div id="controls"></div>
+<div id="currentSlide"></div>
+<div id="header"></div>
+<div id="footer">
+  <h1></h1>
+  <h2></h2>
+</div>
+</div>
+<div class="presentation">
+<div id="overloading-operators-in-python" class="titleslide slide section level1"><h1>Overloading operators in python</h1></div><div id="overloading" class="slide section level2">
+<h1>Overloading</h1>
+<p>In Python, certain operators can do different things when used on different types, which is why this works:</p>
+<pre><code>1 + 2</code></pre>
+<p>... As well as this:</p>
+<pre><code>&quot;apple&quot; + &quot;pie&quot;</code></pre>
+</div><div id="diy" class="slide section level2">
+<h1>DIY</h1>
+<p>We can do it ourselves. Lets make a node for a graph that can easily combine with another node, producing a third node that contains a combination of the first two nodes children.</p>
+<p>When we overload, we'll overload the magic method associated with that operator. For the plus operator, we override the magic method <code>__add__</code> on our class.</p>
+</div><div id="example" class="slide section level2">
+<h1>Example</h1>
+<pre><code>class Node(object):
+
+    def __init__(self, value, children=None):
+        self.value = value
+        self.children = []
+
+    def __add__(self, other):
+        return Node(self.children + other.children)</code></pre>
+<p>Now we can do this:</p>
+<pre><code>node_a = Node(value=&quot;a&quot;, children=[Node(1), Node(2)])
+node_b = Node(value=&quot;b&quot;, children=[Node(3), Node(4)])
+new_node.children == [Node(1), Node(2), Node(3), Node(4)]</code></pre>
+</div><div id="real-world-example" class="slide section level2">
+<h1>Real World Example</h1>
+<p>We could overload different operators. For example, the Beam SDK overloads bitwise operators. The following is a wordcount pipeline overloading the bitwise OR (<code>|</code>) and the bitwise RIGHT SHIFT (<code>&gt;&gt;</code>):</p>
+</div><div id="in-the-beam-sdk" class="slide section level2">
+<h1>In the Beam SDK</h1>
+<pre><code>p = beam.Pipeline(options=pipeline_options)
+
+counts = (p | &#39;read&#39; &gt;&gt; ReadFromText(file)
+          | &#39;split&#39; &gt;&gt; (beam.ParDo(WordExtractingDoFn()))
+          | &#39;pair_with_one&#39; &gt;&gt; beam.Map(lambda x: (x, 1))
+          | &#39;group&#39; &gt;&gt; beam.GroupByKey()
+          | &#39;count&#39; &gt;&gt; beam.Map(count_ones))</code></pre>
+<p>This code is using operator overloading to label each transform and then attach them to the pipeline in a streamlined, domain-specific way. Keep in mind this kind of &quot;syntactic sugar&quot; can be offputting to new developers looking for familiar Python.</p>
+</div><div id="source-code" class="slide section level2">
+<h1>Source Code</h1>
+<p>Here's a link to the apache beam <a href="https://github.com/apache/beam/blob/09fe4985f3698d6d1cb2722f2c010ba63d97d471/sdks/python/apache_beam/transforms/ptransform.py#L471">github</a> where they overload __or__ and __rrshift__ on the PTransform class.</p>
+</div>
+</div>
+</body>
+</html>

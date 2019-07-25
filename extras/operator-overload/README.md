@@ -25,7 +25,10 @@ class Node(object):
 
     def __init__(self, value, children=None):
         self.value = value
-        self.children = []
+        if children is None:
+            self.children = []
+        else:
+            self.children = children
 
     def __add__(self, other):
         return Node(self.children + other.children)

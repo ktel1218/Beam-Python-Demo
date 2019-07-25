@@ -14,7 +14,7 @@ which is why this works:
 ```
 
 ## DIY
-We can do it ourselves. Lets make a node for a graph that can easily combine with another node, producing a third node that contains a combination of the first two nodes children.
+We can do it ourselves. Lets make a node for a graph that can easily combine with another node, producing a third node that contains a combination of the first two nodes' children.
 
 When we overload, we'll overload the magic method associated with that operator. For the plus operator, we override the magic method `__add__` on our class.
 

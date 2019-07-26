@@ -45,14 +45,21 @@
 </div>
 <div id="some-background" class="slide section level1">
 <h1>Some background</h1>
+<h3 id="you-have-a-lot-of-data-and-you-want-to-do-something-to-it.">You have a lot of data, and you want to do something to it.</h3>
 </div>
 <div id="supercompute-vs-clustered-compute" class="slide section level1">
 <h1>Supercompute vs Clustered Compute</h1>
-<p>Send data to one big giant expensive computer or Break up data into pieces and send to lots of computers</p>
+<p>Send data to one big giant expensive computer</p>
+<p><strong>or</strong></p>
+<p>Break up data into pieces and send to lots of computers (a cluster).</p>
 </div>
-<div id="so-you-want-to-run-on-a-cluster" class="slide section level1">
-<h1>So, you want to run on a cluster?</h1>
-<h3 id="step-1-pick-a-framework">Step 1: Pick a framework:</h3>
+<div id="do-you-have-a-supercomputer" class="slide section level1">
+<h1>Do you have a supercomputer?</h1>
+<h3 id="yesno">Yes/No</h3>
+</div>
+<div id="lets-use-a-cluster." class="slide section level1">
+<h1>Lets use a cluster.</h1>
+<h4 id="step-1-pick-a-framework">Step 1: Pick a framework:</h4>
 <ul>
 <li>Apex</li>
 <li>Dataflow</li>
@@ -62,9 +69,7 @@
 <li>Hadoop</li>
 <li>Spark</li>
 <li>Flink</li>
-<li>Storm</li>
-<li>Sqoop</li>
-<li>...</li>
+<li>Storm ... etc</li>
 </ul>
 </div>
 <div id="considerations" class="slide section level1">
@@ -78,14 +83,43 @@
 <li>querying?</li>
 <li>machine learning?</li>
 <li>guarantees?</li>
-<li>Works</li>
-<li>...</li>
+<li>platform-specific?</li>
+<li>... etc</li>
 </ul>
-<p>Or dont think about it too hard and use Beam</p>
 </div>
-<div id="beam-and-runners" class="slide section level1">
-<h1>Beam and Runners</h1>
-<p>&quot;Implement batch and streaming data processing jobs that run on any execution engine.&quot;</p>
+<div id="another-option" class="slide section level1">
+<h1>Another Option</h1>
+<h3 id="dont-think-about-it-too-hard-and-use-beam">Dont think about it too hard and use Beam</h3>
+</div>
+<div id="parallels" class="slide section level1">
+<h1>Parallels</h1>
+<h3 id="sqlalchemy">Sqlalchemy</h3>
+<h3 id="discuss">[Discuss]</h3>
+</div>
+<div id="question-break" class="slide section level1">
+<h1>Question Break</h1>
+</div>
+<div id="real-world-scenario" class="slide section level1">
+<h1>Real-World Scenario</h1>
+<p>(kind of)</p>
+<p>Run:</p>
+<p><code>python clean_numbers_complete.py --input phone-numbers.txt --output output.txt</code></p>
+<p>Check output.</p>
+<p>Modify clean_numbers.py to get a similar (or improved!) version of the output file we just saw.</p>
+</div>
+<div id="potential-enhancements" class="slide section level1">
+<h1>Potential Enhancements</h1>
+<h3 id="discuss-1">[Discuss]</h3>
+</div>
+<div id="other-potential-enhancements" class="slide section level1">
+<h1>Other Potential Enhancements</h1>
+<ol style="list-style-type: decimal">
+<li>GroupBy Area Code and Count</li>
+<li>Turn it into a streaming app by replacing ReadFromText with ReadFromPubSub and WriteToText with WriteToPubSub (<a href="https://github.com/apache/beam/blob/master/sdks/python/apache_beam/examples/streaming_wordcount.py">example streaming wordcount code</a>)</li>
+<li>Pass in a different runner with the <code>--runner</code> arg, such as DataflowRunner (will require additional arguments)</li>
+<li>Add metrics (<a href="https://github.com/apache/beam/blob/master/sdks/python/apache_beam/examples/wordcount.py">example in original wordcount code</a>)</li>
+<li>Include a timer in your metrics, find out how to run in parallel and see if that speeds things up.</li>
+</ol>
 </div>
 </div>
 </body>

@@ -1,3 +1,5 @@
+
+
 #
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
@@ -23,13 +25,17 @@ import argparse
 import logging
 import re
 
-from past.builtins import unicode
-
 import apache_beam as beam
 from apache_beam.io import ReadFromText
 from apache_beam.io import WriteToText
 from apache_beam.options.pipeline_options import PipelineOptions
-from apache_beam.options.pipeline_options import SetupOptions
+
+
+def clean(phone_number):
+    """Clean each phone number"""
+    numbers = re.findall(r'[1-9]+', phone_number, re.UNICODE)
+    clean_number = "".join(numbers)
+    return clean_number
 
 
 def run(argv=None):
@@ -45,28 +51,16 @@ def run(argv=None):
                         help='Output file to write results to.')
     known_args, pipeline_args = parser.parse_known_args(argv)
 
-    # We use the save_main_session option because one or more DoFn's in this
-    # workflow rely on global context (e.g., a module imported at module level).
     pipeline_options = PipelineOptions(pipeline_args)
-    pipeline_options.view_as(SetupOptions).save_main_session = True
     p = beam.Pipeline(options=pipeline_options)
 
     # Read the text file[pattern] into a PCollection.
-    lines = p | 'read' >> ReadFromText(known_args.input)
 
-    # Count the occurrences of each word.
-    def clean(phone_number):
-        numbers = re.findall(r'[1-9]+', phone_number, re.UNICODE)
-        clean_number = "".join(numbers)
-        return clean_number
-
-    output = (lines
-              | 'clean' >> beam.Map(clean))
-
-
-    # Write the output using a "Write" transform that has side effects.
-    # pylint: disable=expression-not-assigned
-    output | 'write' >> WriteToText(known_args.output)
+    # Please see extras/operator-overload for a description of whats happening
+    # in this syntax.
+    lines = ( p | 'read' >> ReadFromText(known_args.input)
+             | 'clean' >> beam.Map(clean)
+             | 'write' >> WriteToText(known_args.output))
 
     result = p.run()
     result.wait_until_finish()

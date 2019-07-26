@@ -11,15 +11,22 @@ What do I use it for?
 
 # Some background
 
+### You have a lot of data, and you want to do something to it.
+
 # Supercompute vs Clustered Compute
 
 Send data to one big giant expensive computer
-or
-Break up data into pieces and send to lots of computers
 
-# So, you want to run on a cluster?
+**or**
 
-### Step 1: Pick a framework:
+Break up data into pieces and send to lots of computers (a cluster).
+
+# Do you have a supercomputer?
+### Yes/No
+
+# Lets use a cluster.
+
+#### Step 1: Pick a framework:
 
 * Apex
 * Dataflow
@@ -29,9 +36,7 @@ Break up data into pieces and send to lots of computers
 * Hadoop
 * Spark
 * Flink
-* Storm
-* Sqoop
-* ...
+* Storm ... etc
 
 
 # Considerations
@@ -44,23 +49,42 @@ Break up data into pieces and send to lots of computers
 * querying?
 * machine learning?
 * guarantees?
-* Works 
-* ...
+* platform-specific?
+* ... etc
 
+# Another Option
 
-Or dont think about it too hard and use Beam
+### Dont think about it too hard and use Beam
 
-# Beam and Runners
+# Parallels
 
-"Implement batch and streaming data processing jobs that run on any execution engine."
+### Sqlalchemy
 
-# WordCount
+###[Discuss]
 
-[ review of word count ]
+# Question Break
 
 # Real-World Scenario
 
 (kind of)
 
-[Live Coding]
+Run:
+
+`python clean_numbers_complete.py --input phone-numbers.txt --output output.txt`
+
+Check output.
+
+Modify clean_numbers.py to get a similar (or improved!) version of the output file we just saw.
+
+# Potential Enhancements
+
+### [Discuss]
+
+# Other Potential Enhancements
+
+1. GroupBy Area Code and Count
+2. Turn it into a streaming app by replacing ReadFromText with ReadFromPubSub and WriteToText with WriteToPubSub ([example streaming wordcount code](https://github.com/apache/beam/blob/master/sdks/python/apache_beam/examples/streaming_wordcount.py))
+3. Pass in a different runner with the `--runner` arg, such as DataflowRunner (will require additional arguments)
+4. Add metrics ([example in original wordcount code](https://github.com/apache/beam/blob/master/sdks/python/apache_beam/examples/wordcount.py))
+5. Include a timer in your metrics, find out how to run in parallel and see if that speeds things up.
 

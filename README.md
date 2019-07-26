@@ -12,10 +12,6 @@ A Short Demo of Apache's Beam using the Python SDK
 
 # To Run
 
-`python wordcount.py --input input.txt --output output.txt`
+`python clean_numbers_complete.py --input phone-numbers.txt --output output.txt`
 
-# Modification 1
-Replace input.txt with your own file. How big a file can you pass before the program is noticeably slower?
-
-# Modification 2
-
+You should see an output file that looks like `output.txt-00000-of-00001`.

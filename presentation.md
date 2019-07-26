@@ -82,9 +82,9 @@ Modify clean_numbers.py to get a similar (or improved!) version of the output fi
 
 # Other Potential Enhancements
 
-1. GroupBy Area Code and Count
+1. GroupBy Area Code and Count (see [the core transforms library](https://github.com/apache/beam/blob/master/sdks/python/apache_beam/transforms/core.py) for ideas of what to use instead of beam.Map)
+4. Add metrics ([example in original wordcount code](https://github.com/apache/beam/blob/master/sdks/python/apache_beam/examples/wordcount.py))
 2. Turn it into a streaming app by replacing ReadFromText with ReadFromPubSub and WriteToText with WriteToPubSub ([example streaming wordcount code](https://github.com/apache/beam/blob/master/sdks/python/apache_beam/examples/streaming_wordcount.py))
 3. Pass in a different runner with the `--runner` arg, such as DataflowRunner (will require additional arguments)
-4. Add metrics ([example in original wordcount code](https://github.com/apache/beam/blob/master/sdks/python/apache_beam/examples/wordcount.py))
-5. Include a timer in your metrics, find out how to run in parallel and see if that speeds things up.
+5. Find out how to run in parallel (spin up a kubernetes cluster locally!). Include a timer in your metrics, and see if that speeds things up or slows things down.
 

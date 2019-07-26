@@ -51,6 +51,9 @@ def run(argv=None):
     p = beam.Pipeline(options=pipeline_options)
 
     # Read the text file[pattern] into a PCollection.
+
+    # NOTE: Please see extras/operator-overload for a description of whats happening
+    # in this syntax.
     lines = ( p | 'read' >> ReadFromText(known_args.input)
              | 'clean' >> beam.Map(clean)
              | 'write' >> WriteToText(known_args.output))

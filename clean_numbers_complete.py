@@ -56,7 +56,7 @@ def run(argv=None):
 
     # Read the text file[pattern] into a PCollection.
 
-    # Please see extras/operator-overload for a description of whats happening
+    # NOTE: Please see extras/operator-overload for a description of whats happening
     # in this syntax.
     lines = ( p | 'read' >> ReadFromText(known_args.input)
              | 'clean' >> beam.Map(clean)

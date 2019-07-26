@@ -9,6 +9,43 @@
   <!-- configuration parameters -->
   <meta name="defaultView" content="slideshow" />
   <meta name="controlVis" content="hidden" />
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
   <!-- style sheet links -->
   <link rel="stylesheet" href="s5/default/slides.css" type="text/css" media="projection" id="slideProj" />
   <link rel="stylesheet" href="s5/default/outline.css" type="text/css" media="screen" id="outlineStyle" />
@@ -31,43 +68,51 @@
 <div id="overloading-operators-in-python" class="titleslide slide section level1"><h1>Overloading operators in python</h1></div><div id="overloading" class="slide section level2">
 <h1>Overloading</h1>
 <p>In Python, certain operators can do different things when used on different types, which is why this works:</p>
-<pre><code>1 + 2</code></pre>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="dv">1</span> <span class="op">+</span> <span class="dv">2</span></code></pre></div>
 <p>... As well as this:</p>
-<pre><code>&quot;apple&quot; + &quot;pie&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co">&quot;apple&quot;</span> <span class="op">+</span> <span class="st">&quot;pie&quot;</span></code></pre></div>
 </div><div id="diy" class="slide section level2">
 <h1>DIY</h1>
-<p>We can do it ourselves. Lets make a node for a graph that can easily combine with another node, producing a third node that contains a combination of the first two nodes children.</p>
+<p>We can do it ourselves. Lets make a node for a graph that can easily combine with another node, producing a third node that contains a combination of the first two nodes' children.</p>
 <p>When we overload, we'll overload the magic method associated with that operator. For the plus operator, we override the magic method <code>__add__</code> on our class.</p>
 </div><div id="example" class="slide section level2">
 <h1>Example</h1>
-<pre><code>class Node(object):
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="kw">class</span> Node(<span class="bu">object</span>):
 
-    def __init__(self, value, children=None):
-        self.value = value
-        self.children = []
+    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, value, children<span class="op">=</span><span class="va">None</span>):
+        <span class="va">self</span>.value <span class="op">=</span> value
+        <span class="cf">if</span> children <span class="op">is</span> <span class="va">None</span>:
+            <span class="va">self</span>.children <span class="op">=</span> []
+        <span class="cf">else</span>:
+            <span class="va">self</span>.children <span class="op">=</span> children
 
-    def __add__(self, other):
-        return Node(self.children + other.children)</code></pre>
+    <span class="kw">def</span> <span class="fu">__add__</span>(<span class="va">self</span>, other):
+        <span class="cf">return</span> Node(<span class="va">self</span>.children <span class="op">+</span> other.children)</code></pre></div>
+</div><div id="result" class="slide section level2">
+<h1>Result</h1>
 <p>Now we can do this:</p>
-<pre><code>node_a = Node(value=&quot;a&quot;, children=[Node(1), Node(2)])
-node_b = Node(value=&quot;b&quot;, children=[Node(3), Node(4)])
-new_node.children == [Node(1), Node(2), Node(3), Node(4)]</code></pre>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">node_a <span class="op">=</span> Node(value<span class="op">=</span><span class="st">&quot;a&quot;</span>, children<span class="op">=</span>[Node(<span class="dv">1</span>),
+                                   Node(<span class="dv">2</span>)])
+node_b <span class="op">=</span> Node(value<span class="op">=</span><span class="st">&quot;b&quot;</span>, children<span class="op">=</span>[Node(<span class="dv">3</span>),
+                                   Node(<span class="dv">4</span>)])
+new_node.children <span class="op">==</span> [Node(<span class="dv">1</span>), Node(<span class="dv">2</span>),
+                      Node(<span class="dv">3</span>), Node(<span class="dv">4</span>)]</code></pre></div>
 </div><div id="real-world-example" class="slide section level2">
 <h1>Real World Example</h1>
 <p>We could overload different operators. For example, the Beam SDK overloads bitwise operators. The following is a wordcount pipeline overloading the bitwise OR (<code>|</code>) and the bitwise RIGHT SHIFT (<code>&gt;&gt;</code>):</p>
 </div><div id="in-the-beam-sdk" class="slide section level2">
 <h1>In the Beam SDK</h1>
-<pre><code>p = beam.Pipeline(options=pipeline_options)
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">p <span class="op">=</span> beam.Pipeline(options<span class="op">=</span>pipeline_options)
 
-counts = (p | &#39;read&#39; &gt;&gt; ReadFromText(file)
-          | &#39;split&#39; &gt;&gt; (beam.ParDo(WordExtractingDoFn()))
-          | &#39;pair_with_one&#39; &gt;&gt; beam.Map(lambda x: (x, 1))
-          | &#39;group&#39; &gt;&gt; beam.GroupByKey()
-          | &#39;count&#39; &gt;&gt; beam.Map(count_ones))</code></pre>
+counts <span class="op">=</span> (p <span class="op">|</span> <span class="st">&#39;read&#39;</span> <span class="op">&gt;&gt;</span> ReadFromText(<span class="bu">file</span>)
+          <span class="op">|</span> <span class="st">&#39;split&#39;</span> <span class="op">&gt;&gt;</span> (beam.ParDo(WordExtractingDoFn()))
+          <span class="op">|</span> <span class="st">&#39;pair_with_one&#39;</span> <span class="op">&gt;&gt;</span> beam.Map(<span class="kw">lambda</span> x: (x, <span class="dv">1</span>))
+          <span class="op">|</span> <span class="st">&#39;group&#39;</span> <span class="op">&gt;&gt;</span> beam.GroupByKey()
+          <span class="op">|</span> <span class="st">&#39;count&#39;</span> <span class="op">&gt;&gt;</span> beam.Map(count_ones))</code></pre></div>
 <p>This code is using operator overloading to label each transform and then attach them to the pipeline in a streamlined, domain-specific way. Keep in mind this kind of &quot;syntactic sugar&quot; can be offputting to new developers looking for familiar Python.</p>
 </div><div id="source-code" class="slide section level2">
 <h1>Source Code</h1>
-<p>Here's a link to the apache beam <a href="https://github.com/apache/beam/blob/09fe4985f3698d6d1cb2722f2c010ba63d97d471/sdks/python/apache_beam/transforms/ptransform.py#L471">github</a> where they overload __or__ and __rrshift__ on the PTransform class.</p>
+<p>Here's a link to the apache beam <a href="https://github.com/apache/beam/blob/09fe4985f3698d6d1cb2722f2c010ba63d97d471/sdks/python/apache_beam/transforms/ptransform.py#L471">github</a> where they overload <code>__or__</code> and <code>__rrshift__</code> on the PTransform class.</p>
 </div>
 </div>
 </body>

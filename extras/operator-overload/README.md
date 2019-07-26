@@ -34,12 +34,16 @@ class Node(object):
         return Node(self.children + other.children)
 ```
 
+## Result
 Now we can do this:
 
 ```python
-node_a = Node(value="a", children=[Node(1), Node(2)])
-node_b = Node(value="b", children=[Node(3), Node(4)])
-new_node.children == [Node(1), Node(2), Node(3), Node(4)]
+node_a = Node(value="a", children=[Node(1),
+                                   Node(2)])
+node_b = Node(value="b", children=[Node(3),
+                                   Node(4)])
+new_node.children == [Node(1), Node(2),
+                      Node(3), Node(4)]
 ```
 
 ## Real World Example
@@ -60,5 +64,5 @@ This code is using operator overloading to label each transform and then attach 
 
 ## Source Code
 
-Here's a link to the apache beam [github](https://github.com/apache/beam/blob/09fe4985f3698d6d1cb2722f2c010ba63d97d471/sdks/python/apache_beam/transforms/ptransform.py#L471) where they overload \_\_or__ and \_\_rrshift__ on the PTransform class.
+Here's a link to the apache beam [github](https://github.com/apache/beam/blob/09fe4985f3698d6d1cb2722f2c010ba63d97d471/sdks/python/apache_beam/transforms/ptransform.py#L471) where they overload `__or__` and `__rrshift__` on the PTransform class.
 

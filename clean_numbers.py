@@ -32,28 +32,6 @@ from apache_beam.options.pipeline_options import PipelineOptions
 from apache_beam.options.pipeline_options import SetupOptions
 
 
-class WordExtractingDoFn(beam.DoFn):
-    """Parse each line of input text into words."""
-
-    def __init__(self):
-        pass
-
-    def process(self, element):
-        """Returns an iterator over the words of this element.
-
-        The element is a line of text.
-
-        Args:
-          element: the element being processed
-
-        Returns:
-          The processed element.
-        """
-        text_line = element.strip()
-        words = re.findall(r'[\w\']+', text_line, re.UNICODE)
-        return words
-
-
 def run(argv=None):
     """Main entry point; defines and runs the wordcount pipeline."""
     parser = argparse.ArgumentParser()
@@ -77,24 +55,13 @@ def run(argv=None):
     lines = p | 'read' >> ReadFromText(known_args.input)
 
     # Count the occurrences of each word.
-    def count_ones(word_ones):
-        (word, ones) = word_ones
-        return (word, sum(ones))
+    def clean(phone_number):
+        # TODO: rewrite this function so it returns a normalized phone number
+        return phone_number
 
-    counts = (lines
-              | 'split' >> (beam.ParDo(WordExtractingDoFn())
-                            .with_output_types(unicode))
-              | 'pair_with_one' >> beam.Map(lambda x: (x, 1))
-              | 'group' >> beam.GroupByKey()
-              | 'count' >> beam.Map(count_ones))
+    output = (lines
+              | 'clean' >> beam.Map(clean))
 
-    # Format the counts into a PCollection of strings.
-    def format_result(word_count):
-        (word, count) = word_count
-        return '%s: %d' % (word, count)
-
-    output = (counts
-             | 'format' >> beam.Map(format_result))
 
     # Write the output using a "Write" transform that has side effects.
     # pylint: disable=expression-not-assigned
